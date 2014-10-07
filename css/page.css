@@ -1,0 +1,57 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Sans);
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'PT Sans', sans-serif;
+  background-color: #fff;
+}
+
+h1, h2 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 75px;
+}
+
+h2 {
+  font-size: 50px;
+}
+
+.dropdown {
+  position: fixed;
+  right: 25px;
+  top: 25px;
+}
+
+.landing-section {
+  display: table;
+  min-height: 100%;
+  height: auto!important;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.landing-section:nth-child(odd) {
+  background-color: #eee;
+}
+
+.landing-section > a {
+  position: absolute;
+}
+
+.landing-section h4 .glyphicon {
+  font-size: 125px;
+}
+
+.landing-section .content {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 70%;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Landing</title>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/page.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+  <![endif]-->
+
+</head>
+<body data-landing=".landing-section" data-landing-nav=".landing-nav">
+
+  <div class="dropdown">
+    <a class="btn btn-default dropdown-toggle" href="#" id="dropdownMenu1" data-toggle="dropdown">
+      <span class="value">Landing</span>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu pull-right landing-nav" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#0">Landing</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#1">Opacity</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#2">Horizontal</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#3">Vertical</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#4">Rotation</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#5">Rescaling</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#6">All effects</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#7">Github</a></li>
+    </ul>
+  </div>
+
+  <div class="container landing-section">
+    <a name="0"></a>
+    <div class="content text-center">
+      <h1>Landing</h1>
+      <h3><span class="glyphicon glyphicon-chevron-down"></span></h3>
+      <br>
+      <p class="text-muted">&copy; 2014 Andrey Polischuk</p>
+    </div>
+  </div>
+
+  <div class="container landing-section">
+    <a name="1"></a>
+    <div class="content">
+      <h4 landing-opacity="0">
+        <span class="glyphicon glyphicon-search"></span>
+      </h4>
+      <h2 landing-opacity="0">
+        Opacity
+      </h2>
+    </div>
+  </div>
+  
+  <div class="container landing-section">
+    <a name="2"></a>
+    <div class="content">
+      <h4 landing-x="-400px">
+        <span class="glyphicon glyphicon-resize-horizontal"></span>
+      </h4>
+      <h2 landing-x="400px">
+        Horizontal movement
+      </h2>
+    </div>
+  </div>
+
+  <div class="container landing-section">
+    <a name="3"></a>
+    <div class="content">
+      <h4 landing-y="-400px">
+        <span class="glyphicon glyphicon-resize-vertical"></span>
+      </h4>
+      <h2 landing-y="600px">
+        Vertical movement
+      </h2>
+    </div>
+  </div>
+
+  <div class="container landing-section">
+    <a name="4"></a>
+    <div class="content">
+      <h4 landing-rotate="180deg">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </h4>
+      <h2 landing-rotate="-90deg">
+        Rotation
+      </h2>
+    </div>
+  </div>
+
+  <div class="container landing-section">
+    <a name="5"></a>
+    <div class="content">
+      <h4 landing-scale="0.5">
+        <span class="glyphicon glyphicon glyphicon-fullscreen"></span>
+      </h4>
+      <h2 landing-scale="0.5">
+        Rescaling
+      </h2>
+    </div>
+  </div>
+
+  <div class="container landing-section">
+    <a name="6"></a>
+    <div class="content">
+      <h4 landing-opacity="0" landing-x="-400px" landing-y="-400px" landing-scale="0.5">
+        <span class="glyphicon glyphicon-asterisk"></span>
+      </h4>
+      <h2 landing-opacity="0" landing-x="400px" landing-y="600px" landing-rotate="-90deg" landing-scale="0">
+        All effects at once
+      </h2>
+    </div>  
+  </div>
+
+  <div class="container landing-section">
+    <a name="7"></a>
+    <div class="content">
+      <h2 landing-opacity="0" landing-y="-400px">
+        <a href="https://github.com/andrepolischuk/landing">Github</a>
+      </h2>
+    </div>  
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="js/landing.min.js"></script>
+
+  <script type="text/javascript">
+
+    landing.on('change', function(cur) {
+      $('.dropdown .value').html($('.dropdown .active').text());
+    });
+
+  </script>
+
+</body>
+</html>
