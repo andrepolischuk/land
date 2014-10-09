@@ -37,34 +37,34 @@
   
   var effects = {
     x : {
-      attr : 'landing-x',
+      attr : 'data-landing-x',
       prop : 'transform',
       def  : 0,
       ext  : 'px',
       func : 'translateX'
     },
     y : {
-      attr : 'landing-y',
+      attr : 'data-landing-y',
       prop : 'transform',
       def  : 0,
       ext  : 'px',
       func : 'translateY'
     },
     scale : {
-      attr : 'landing-scale',
+      attr : 'data-landing-scale',
       prop : 'transform',
       def  : 1,
       func : 'scale'
     },
     rotate : {
-      attr : 'landing-rotate',
+      attr : 'data-landing-rotate',
       prop : 'transform',
       def  : 0,
       ext  : 'deg',
       func : 'rotate'
     },
     opacity : {
-      attr : 'landing-opacity',
+      attr : 'data-landing-opacity',
       def  : 1,
       prop : 'opacity'
     }
