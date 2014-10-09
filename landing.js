@@ -107,18 +107,6 @@
   var callbacks = {};
 
   /**
-   * Sections
-   */
-  
-  var sections = document.querySelectorAll(sectionClass);
-
-  /**
-   * Navigation
-   */
-  
-  var nav = navClass ? document.querySelector(navClass) : undefined;
-
-  /**
    * Landing module
    * @api public
    */
@@ -137,6 +125,18 @@
     }
 
   };
+
+  /**
+   * Sections
+   */
+  
+  var sections = landing.sections = document.querySelectorAll(sectionClass);
+
+  /**
+   * Navigation
+   */
+  
+  var nav = landing.nav = navClass ? document.querySelector(navClass) : undefined;
 
   /**
    * Update section childrens styles via scroll progress
