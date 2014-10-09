@@ -23,47 +23,55 @@
 
 Effects defining through setting element attributes with start value.
 
-### landing-opacity
+### data-landing-opacity
 
   Opacity
 
 ```html
-<h2 landing-opacity="0">...</h2>
+<h2 data-landing-opacity="0">...</h2>
 ```
 
-### landing-x
+### data-landing-x
   
   Horizontal movement
 
 ```html
-<h2 landing-x="-350px">...</h2>
+<h2 data-landing-x="-350px">...</h2>
 ```
 
-### landing-y
+### data-landing-y
 
   Vertical movement
 
 ```html
-<h2 landing-y="-200px">...</h2>
+<h2 data-landing-y="-200px">...</h2>
 ```
 
-### landing-rotation
+### data-landing-rotation
 
   Rotation
 
 ```html
-<h2 landing-rotation="60deg">...</h2>
+<h2 data-landing-rotation="60deg">...</h2>
 ```
 
-### landing-scale
+### data-landing-scale
 
   Rescaling
 
 ```html
-<h2 landing-scale="0.5">...</h2>
+<h2 data-landing-scale="0.5">...</h2>
 ```
 
 ## API
+
+### landing.sections
+
+  Landing section elements array
+
+### landing.nav
+
+  Landing nav element
 
 ### landing.on(event, callback)
 
