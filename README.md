@@ -7,7 +7,7 @@
   Via script tag in page sources:
 
 ```html
-<script src="/static/js/landing.min.js">
+<script src="/static/js/landing.min.js"></script>
 ```
 
   Set landing sections classes:
