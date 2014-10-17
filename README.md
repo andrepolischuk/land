@@ -19,20 +19,20 @@
 * `data-landing` - landing sections class
 * `data-landing-nav` - scroll spy navigation class
 
-## Effects
+## Options
 
-Effects defining through setting element attributes with start value.
+Options defining through setting element attributes with start value.
 
 ### data-landing-opacity
 
-  Opacity
+  Opacity (0..1)
 
 ```html
 <h2 data-landing-opacity="0">...</h2>
 ```
 
 ### data-landing-x
-  
+
   Horizontal movement
 
 ```html
@@ -57,10 +57,19 @@ Effects defining through setting element attributes with start value.
 
 ### data-landing-scale
 
-  Rescaling
+  Rescaling (0..2)
 
 ```html
 <h2 data-landing-scale="0.5">...</h2>
+```
+
+### data-landing-delay
+
+  Delay of action (0..1)
+
+```html
+<h2 data-landing-opacity="0">...</h2>
+<h2 data-landing-opacity="0" data-landing-delay="0.5">...</h2>
 ```
 
 ## API
