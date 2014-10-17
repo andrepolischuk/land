@@ -8,9 +8,9 @@
   /**
    * Object classes
    */
-  
+
   var sectionClass   = document.body.getAttribute('data-landing');
-  var navClass       = document.body.getAttribute('data-landing-nav');  
+  var navClass       = document.body.getAttribute('data-landing-nav');
   var navActiveClass = 'active';
 
   /**
@@ -24,7 +24,7 @@
   /**
    * Current section
    */
-  
+
   var current;
 
   /**
@@ -34,7 +34,7 @@
    * rotate
    * opacity
    */
-  
+
   var effects = {
     x : {
       attr : 'data-landing-x',
@@ -73,7 +73,7 @@
   /**
    * Effects attributes array
    */
-  
+
   var effectsAttr = [];
 
   for (var effect in effects) {
@@ -103,14 +103,14 @@
   /**
    * Callbacks
    */
-  
+
   var callbacks = {};
 
   /**
    * Landing module
    * @api public
    */
-  
+
   var landing = {};
 
   /**
@@ -129,20 +129,20 @@
   /**
    * Sections
    */
-  
+
   var sections = landing.sections = document.querySelectorAll(sectionClass);
 
   /**
    * Navigation
    */
-  
+
   var nav = landing.nav = navClass ? document.querySelector(navClass) : undefined;
 
   /**
    * Update section childrens styles via scroll progress
    * @api private
    */
-  
+
   var update = function(section, progress) {
 
     var start;
@@ -195,7 +195,7 @@
           element.style[param] = css[param];
         }
       }
-      
+
     }
 
   };
@@ -204,7 +204,7 @@
    * Scroll handler
    * @api private
    */
-    
+
   var scroll = function() {
 
     var cur = 0;
@@ -283,9 +283,9 @@
   /**
    * Initialization
    */
-  
+
   if ('addEventListener' in window) {
-    window.addEventListener('scroll', scroll, false); 
+    window.addEventListener('scroll', scroll, false);
   }
 
   scroll();
@@ -293,7 +293,7 @@
   /**
    * Module exports
    */
-  
+
   window.landing = landing;
 
 }();
