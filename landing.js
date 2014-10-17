@@ -101,6 +101,12 @@
   };
 
   /**
+   * Delay attribute
+   */
+
+  var delayAttr = 'data-landing-delay';
+
+  /**
    * Callbacks
    */
 
@@ -151,6 +157,7 @@
     var set;
     var prop;
     var element;
+    var delay;
 
     var css = {};
     var elements = section.querySelectorAll(effectsAttr.join(','));
@@ -159,6 +166,7 @@
 
       css     = {};
       element = elements[el];
+      delay   = element.getAttribute(delayAttr);
 
       for (var effect in effects) {
 
@@ -170,11 +178,12 @@
           if (start) {
 
             // calculate range
-            start = parseInt(start);
+            start = parseFloat(start);
+            delay = parseFloat(delay) || 0;
             final = set.def;
 
             // calculate current values
-            value = (start + ((final - start) * progress));
+            value = start + ((final - start) * (progress < delay ? 0 : progress - 1 + ((progress - delay) / (1 - delay))));
             value += set.ext || '';
             value = effect === 'opacity' ? value : set.func + '(' + value + ')';
 
@@ -289,10 +298,6 @@
   }
 
   scroll();
-
-  /**
-   * Module exports
-   */
 
   if (typeof define === 'function' && define.amd) {
 
