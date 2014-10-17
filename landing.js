@@ -299,6 +299,10 @@
 
   scroll();
 
+  /**
+   * Module exports
+   */
+
   if (typeof define === 'function' && define.amd) {
 
     define([], function() {
