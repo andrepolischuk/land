@@ -294,6 +294,20 @@
    * Module exports
    */
 
-  window.landing = landing;
+  if (typeof define === 'function' && define.amd) {
 
-}();
+    define([], function() {
+      return landing;
+    });
+
+  } else if (typeof module !== 'undefined' && module.exports) {
+
+    module.exports = landing;
+
+  } else {
+
+    this.landing = landing;
+
+  }
+
+}.call(this);
