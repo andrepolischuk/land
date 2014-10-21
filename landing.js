@@ -28,6 +28,32 @@
   var current;
 
   /**
+   * Arrays iterator
+   */
+
+  var each = function(array, fn) {
+
+    var i;
+
+    if ('length' in array) {
+
+      for (i = 0; i < array.length; i++) {
+        fn(array[i], i);
+      }
+
+    } else {
+
+      for (i in array) {
+        if (array.hasOwnProperty(i)) {
+          fn(array[i], i);
+        }
+      }
+
+    }
+
+  };
+
+  /**
    * Effects parameters
    * x, y
    * scale
@@ -76,11 +102,9 @@
 
   var effectsAttr = [];
 
-  for (var effect in effects) {
-    if (effects.hasOwnProperty(effect)) {
-      effectsAttr.push('[' + effects[effect].attr + ']');
-    }
-  }
+  each(effects, function(effect) {
+    effectsAttr.push('[' + effect.attr + ']');
+  });
 
   /**
    * CSS prefixes for effects parameters
@@ -156,56 +180,48 @@
     var value;
     var set;
     var prop;
-    var element;
     var delay;
 
     var css = {};
     var elements = section.querySelectorAll(effectsAttr.join(','));
 
-    for (var el = 0; el < elements.length; el++) {
+    each(elements, function(element) {
 
-      css     = {};
-      element = elements[el];
-      delay   = element.getAttribute(delayAttr);
+      css   = {};
+      delay = element.getAttribute(delayAttr);
 
-      for (var effect in effects) {
+      each(effects, function(effect, key) {
 
-        if (effects.hasOwnProperty(effect)) {
+        set   = effect;
+        start = element.getAttribute(set.attr);
 
-          set   = effects[effect];
-          start = element.getAttribute(set.attr);
+        if (start) {
 
-          if (start) {
+          // calculate range
+          start = parseFloat(start);
+          delay = parseFloat(delay) || 0;
+          final = set.def;
 
-            // calculate range
-            start = parseFloat(start);
-            delay = parseFloat(delay) || 0;
-            final = set.def;
+          // calculate current values
+          value = start + ((final - start) * (progress < delay ? 0 : progress - 1 + ((progress - delay) / (1 - delay))));
+          value += set.ext || '';
+          value = key === 'opacity' ? value : set.func + '(' + value + ')';
 
-            // calculate current values
-            value = start + ((final - start) * (progress < delay ? 0 : progress - 1 + ((progress - delay) / (1 - delay))));
-            value += set.ext || '';
-            value = effect === 'opacity' ? value : set.func + '(' + value + ')';
-
-            // add values to CSS object
-            for (var pref = 0; pref < prefix[set.prop].length; pref++) {
-              prop = prefix[set.prop][pref] + set.prop;
-              css[prop] = css[prop] ? css[prop] + ' ' + value : value;
-            }
-
-          }
+          // add values to CSS object
+          each(prefix[set.prop], function(pref) {
+            prop = pref + set.prop;
+            css[prop] = css[prop] ? css[prop] + ' ' + value : value;
+          });
 
         }
 
-      }
+      });
 
-      for (var param in css) {
-        if (css.hasOwnProperty(param)) {
-          element.style[param] = css[param];
-        }
-      }
+      each(css, function(param, key) {
+        element.style[key] = param;
+      });
 
-    }
+    });
 
   };
 
@@ -224,11 +240,7 @@
     var height;
     var progress;
 
-    var section;
-
-    for (var sect = 0; sect < sections.length; sect++) {
-
-      section = sections[sect];
+    each(sections, function(section, key) {
 
       height       = section.offsetHeight;
       offsetTop    = section.offsetTop;
@@ -237,7 +249,7 @@
       // check current block
       if (scrollTop >= offsetTop && scrollTop <= offsetBottom) {
 
-        cur = sect;
+        cur = key;
         progress = (scrollTop - offsetTop) / height;
 
       }
@@ -260,7 +272,7 @@
 
       }
 
-    }
+    });
 
     // change section
     if (cur !== current) {
