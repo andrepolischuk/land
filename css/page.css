@@ -31,7 +31,7 @@ h2 {
 .landing-section {
   display: table;
   min-height: 100%;
-  height: auto!important;
+  /*height: auto!important;*/
   height: 100%;
   overflow: hidden;
   width: 100%;
