@@ -15,24 +15,7 @@
   <![endif]-->
 
 </head>
-<body data-landing=".landing-section" data-landing-nav=".landing-nav">
-
-  <div class="dropdown">
-    <a class="btn btn-default dropdown-toggle" href="#" id="dropdownMenu1" data-toggle="dropdown">
-      <span class="value">Landing</span>
-      <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu pull-right landing-nav" role="menu" aria-labelledby="dropdownMenu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#0">Landing</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#1">Opacity</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#2">Horizontal</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#3">Vertical</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#4">Rotation</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#5">Rescaling</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#6">All effects</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#7">Github</a></li>
-    </ul>
-  </div>
+<body data-landing=".landing-section">
 
   <div class="container landing-section">
     <a name="0"></a>
@@ -55,7 +38,7 @@
       </h2>
     </div>
   </div>
-  
+
   <div class="container landing-section">
     <a name="2"></a>
     <div class="content">
@@ -113,7 +96,7 @@
       <h2 data-landing-opacity="0" data-landing-x="400px" data-landing-y="600px" data-landing-rotate="-90deg" data-landing-scale="0">
         All effects at once
       </h2>
-    </div>  
+    </div>
   </div>
 
   <div class="container landing-section">
@@ -122,17 +105,17 @@
       <h2 data-landing-opacity="0" data-landing-y="-400px">
         <a href="https://github.com/andrepolischuk/landing">Github</a>
       </h2>
-    </div>  
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="js/landing.min.js"></script>
+  <script src="https://cdn.rawgit.com/andrepolischuk/landing/1.0.3/landing.min.js"></script>
 
   <script type="text/javascript">
 
     landing.on('change', function(cur) {
-      $('.dropdown .value').html($('.dropdown .active').text());
+      console.log(cur);
     });
 
   </script>
