@@ -1,23 +1,20 @@
 # Landing
 
-  Landing page effects & scroll spy script
+  Landing page effects
 
 ## Instalation
 
   Via script tag in page sources:
 
 ```html
-<script src="/static/js/landing.min.js"></script>
+<script src="//cdn.rawgit.com/andrepolischuk/landing/1.0.3/landing.min.js"></script>
 ```
 
-  Set landing sections classes:
+  Set landing sections classes via `data-landing` attribute:
 
 ```html
-<body data-landing=".landing-section" data-landing-nav=".landing-nav">
+<body data-landing=".landing-section">
 ```
-
-* `data-landing` - landing sections class
-* `data-landing-nav` - scroll spy navigation class
 
 ## Options
 
@@ -77,10 +74,6 @@ Options defining through setting element attributes with start value.
 ### landing.sections
 
   Landing section elements array
-
-### landing.nav
-
-  Landing nav element
 
 ### landing.on(event, callback)
 
