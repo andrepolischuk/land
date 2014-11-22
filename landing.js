@@ -1,7 +1,7 @@
 // Landing © 2014 Andrey Polischuk
 // https://github.com/andrepolischuk/landing
 
-!function(undefined) {
+!function() {
 
   'use strict';
 
@@ -10,15 +10,13 @@
    */
 
   var sectionClass   = document.body.getAttribute('data-landing');
-  var navClass       = document.body.getAttribute('data-landing-nav');
-  var navActiveClass = 'active';
 
   /**
    * Base options undefined
    */
 
   if (!sectionClass) {
-    return false;
+    return;
   }
 
   /**
@@ -163,12 +161,6 @@
   var sections = landing.sections = document.querySelectorAll(sectionClass);
 
   /**
-   * Navigation
-   */
-
-  var nav = landing.nav = navClass ? document.querySelector(navClass) : undefined;
-
-  /**
    * Update section childrens styles via scroll progress
    * @api private
    */
@@ -235,6 +227,7 @@
     var cur = 0;
     var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
+    var scrollBottom;
     var offsetBottom;
     var offsetTop;
     var height;
@@ -245,6 +238,7 @@
       height       = section.offsetHeight;
       offsetTop    = section.offsetTop;
       offsetBottom = offsetTop + height;
+      scrollBottom = scrollTop + height;
 
       // check current block
       if (scrollTop >= offsetTop && scrollTop <= offsetBottom) {
@@ -255,17 +249,17 @@
       }
 
       // set styles to all blocks
-      if (scrollTop + height <= offsetTop) {
+      if (scrollBottom <= offsetTop) {
 
         // prev items
         update(section, 0);
 
-      } else if (scrollTop + height > offsetTop && scrollTop + height < offsetBottom) {
+      } else if (scrollBottom > offsetTop && scrollBottom < offsetBottom) {
 
         // current item
         update(section, progress);
 
-      } else if (scrollTop + height >= offsetBottom) {
+      } else if (scrollBottom >= offsetBottom) {
 
         // next item
         update(section, 1);
@@ -278,19 +272,6 @@
     if (cur !== current) {
 
       current = cur;
-
-      // update nav
-      if (nav) {
-
-        var active = nav.querySelector('.' + navActiveClass);
-
-        if (active) {
-          active.className = active.className.replace(new RegExp('(' + navActiveClass + ')', 'gi'), "");
-        }
-
-        nav.children[current].className += ' active';
-
-      }
 
       // call change handler
       if ('function' === typeof callbacks.change) {
