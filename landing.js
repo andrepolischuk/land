@@ -9,7 +9,7 @@
    * Object classes
    */
 
-  var sectionClass   = document.body.getAttribute('data-landing');
+  var sectionClass = document.body.getAttribute('data-landing');
 
   /**
    * Base options undefined
@@ -29,7 +29,7 @@
    * Arrays iterator
    */
 
-  var each = function(array, fn) {
+  function each(array, fn) {
 
     var i;
 
@@ -49,7 +49,7 @@
 
     }
 
-  };
+  }
 
   /**
    * Effects parameters
@@ -148,7 +148,7 @@
 
   landing.on = function(name, callback) {
 
-    if ('function' !== typeof callbacks[name] && 'function' === typeof callback) {
+    if (typeof callbacks[name] !== 'function' && typeof callback === 'function') {
       callbacks[name] = callback;
     }
 
@@ -162,10 +162,12 @@
 
   /**
    * Update section childrens styles via scroll progress
+   * @param {Object} section
+   * @param {Number} progress
    * @api private
    */
 
-  var update = function(section, progress) {
+  function update(section, progress) {
 
     var start;
     var final;
@@ -215,14 +217,14 @@
 
     });
 
-  };
+  }
 
   /**
    * Scroll handler
    * @api private
    */
 
-  var scroll = function() {
+  function scroll() {
 
     var cur = 0;
     var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -274,13 +276,13 @@
       current = cur;
 
       // call change handler
-      if ('function' === typeof callbacks.change) {
+      if (typeof callbacks.change === 'function') {
         callbacks.change(current);
       }
 
     }
 
-  };
+  }
 
   /**
    * Initialization
