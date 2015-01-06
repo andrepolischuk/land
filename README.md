@@ -1,4 +1,4 @@
-# Landing
+# Land
 
   Landing page effects
 
@@ -7,80 +7,80 @@
   Via script tag in page sources:
 
 ```html
-<script src="//cdn.rawgit.com/andrepolischuk/landing/1.0.3/landing.min.js"></script>
+<script src="https://cdn.rawgit.com/andrepolischuk/land/1.1.0/land.min.js"></script>
 ```
 
-  Set landing sections classes via `data-landing` attribute:
+  Set landing sections classes via `data-land` attribute:
 
 ```html
-<body data-landing=".landing-section">
+<body data-land=".land-section">
 ```
 
 ## Options
 
 Options defining through setting element attributes with start value.
 
-### data-landing-opacity
+### data-land-opacity
 
   Opacity (0..1)
 
 ```html
-<h2 data-landing-opacity="0">...</h2>
+<h2 data-land-opacity="0">...</h2>
 ```
 
-### data-landing-x
+### data-land-x
 
   Horizontal movement
 
 ```html
-<h2 data-landing-x="-350px">...</h2>
+<h2 data-land-x="-350px">...</h2>
 ```
 
-### data-landing-y
+### data-land-y
 
   Vertical movement
 
 ```html
-<h2 data-landing-y="-200px">...</h2>
+<h2 data-land-y="-200px">...</h2>
 ```
 
-### data-landing-rotation
+### data-land-rotation
 
   Rotation
 
 ```html
-<h2 data-landing-rotation="60deg">...</h2>
+<h2 data-land-rotation="60deg">...</h2>
 ```
 
-### data-landing-scale
+### data-land-scale
 
   Rescaling (0..2)
 
 ```html
-<h2 data-landing-scale="0.5">...</h2>
+<h2 data-land-scale="0.5">...</h2>
 ```
 
-### data-landing-delay
+### data-land-delay
 
   Delay of action (0..1)
 
 ```html
-<h2 data-landing-opacity="0">...</h2>
-<h2 data-landing-opacity="0" data-landing-delay="0.5">...</h2>
+<h2 data-land-opacity="0">...</h2>
+<h2 data-land-opacity="0" data-land-delay="0.5">...</h2>
 ```
 
 ## API
 
-### landing.sections
+### land.sections
 
   Landing section elements array
 
-### landing.on(event, callback)
+### land.on(event, callback)
 
   Set function called by change current section
 
 ```js
-landing.on('change', function(cur) {
+land.on('change', function(cur) {
   console.log(cur);
 });
 ```

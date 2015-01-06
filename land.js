@@ -1,5 +1,5 @@
-// Landing © 2014 Andrey Polischuk
-// https://github.com/andrepolischuk/landing
+// Land © 2014-2015 Andrey Polischuk
+// github.com/andrepolischuk/land
 
 !function() {
 
@@ -9,7 +9,7 @@
    * Object classes
    */
 
-  var sectionClass = document.body.getAttribute('data-landing');
+  var sectionClass = document.body.getAttribute('data-land');
 
   /**
    * Base options undefined
@@ -61,34 +61,34 @@
 
   var effects = {
     x : {
-      attr : 'data-landing-x',
+      attr : 'data-land-x',
       prop : 'transform',
       def  : 0,
       ext  : 'px',
       func : 'translateX'
     },
     y : {
-      attr : 'data-landing-y',
+      attr : 'data-land-y',
       prop : 'transform',
       def  : 0,
       ext  : 'px',
       func : 'translateY'
     },
     scale : {
-      attr : 'data-landing-scale',
+      attr : 'data-land-scale',
       prop : 'transform',
       def  : 1,
       func : 'scale'
     },
     rotate : {
-      attr : 'data-landing-rotate',
+      attr : 'data-land-rotate',
       prop : 'transform',
       def  : 0,
       ext  : 'deg',
       func : 'rotate'
     },
     opacity : {
-      attr : 'data-landing-opacity',
+      attr : 'data-land-opacity',
       def  : 1,
       prop : 'opacity'
     }
@@ -126,7 +126,7 @@
    * Delay attribute
    */
 
-  var delayAttr = 'data-landing-delay';
+  var delayAttr = 'data-land-delay';
 
   /**
    * Callbacks
@@ -135,18 +135,18 @@
   var callbacks = {};
 
   /**
-   * Landing module
+   * Module
    * @api public
    */
 
-  var landing = {};
+  var land = {};
 
   /**
    * Set callbacks
    * @api public
    */
 
-  landing.on = function(name, callback) {
+  land.on = function(name, callback) {
 
     if (typeof callbacks[name] !== 'function' && typeof callback === 'function') {
       callbacks[name] = callback;
@@ -158,7 +158,7 @@
    * Sections
    */
 
-  var sections = landing.sections = document.querySelectorAll(sectionClass);
+  var sections = land.sections = document.querySelectorAll(sectionClass);
 
   /**
    * Update section childrens styles via scroll progress
@@ -301,16 +301,16 @@
   if (typeof define === 'function' && define.amd) {
 
     define([], function() {
-      return landing;
+      return land;
     });
 
   } else if (typeof module !== 'undefined' && module.exports) {
 
-    module.exports = landing;
+    module.exports = land;
 
   } else {
 
-    this.landing = landing;
+    this.land = land;
 
   }
 
