@@ -22,7 +22,7 @@ h2 {
   font-size: 50px;
 }
 
-.landing-section {
+.land-section {
   display: table;
   min-height: 100%;
   /*height: auto!important;*/
@@ -31,19 +31,19 @@ h2 {
   width: 100%;
 }
 
-.landing-section:nth-child(odd) {
+.land-section:nth-child(odd) {
   background-color: #eee;
 }
 
-.landing-section > a {
+.land-section > a {
   position: absolute;
 }
 
-.landing-section h4 .glyphicon {
+.land-section h4 .glyphicon {
   font-size: 125px;
 }
 
-.landing-section .content {
+.land-section .content {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
