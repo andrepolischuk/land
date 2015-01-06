@@ -1,0 +1,15 @@
+{
+  "name": "land",
+  "description": "Landing page effects",
+  "version": "1.0.3",
+  "keywords": [
+    "landing",
+    "effects"
+  ],
+  "repository": "andrepolischuk/land",
+  "main" : "land.js",
+  "scripts" : [
+    "land.js"
+  ],
+  "license": "MIT"
+}
