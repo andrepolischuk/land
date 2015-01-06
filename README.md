@@ -4,11 +4,25 @@
 
 ## Instalation
 
-  Via script tag in page sources:
+  Browser:
 
 ```html
 <script src="https://cdn.rawgit.com/andrepolischuk/land/1.1.0/land.min.js"></script>
 ```
+
+  Component(1):
+
+```sh
+$ component install andrepolischuk/land
+```
+
+  Npm:
+
+```sh
+$ npm install land
+```
+
+## Use
 
   Set landing sections classes via `data-land` attribute:
 

@@ -1,3 +1,9 @@
+# 1.1.0 / 2015.01.07
+
+  * Module rename form Landing to Land
+  * Add package.json
+  * Add component support #5
+
 # 1.0.3 / 2014.11.22
 
   * Fix #4 exclude scroll spy
