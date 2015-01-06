@@ -1,0 +1,16 @@
+{
+  "name": "land",
+  "description": "Landing page effects",
+  "version": "1.0.3",
+  "keywords": [
+    "landing",
+    "effects"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrepolischuk/land.git"
+  },
+  "main": "land.js",
+  "author": "Andrey Polischuk <andre.polischuk@gmail.com>",
+  "license": "MIT"
+}
