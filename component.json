@@ -7,6 +7,10 @@
     "effects"
   ],
   "repository": "andrepolischuk/land",
+  "dependencies": {
+    "andrepolischuk/ea": "^0.3.0",
+    "component/event": "^0.1.4"
+  },
   "main" : "land.js",
   "scripts" : [
     "land.js"
