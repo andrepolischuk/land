@@ -134,7 +134,6 @@ module.exports = function() {
 
 module.exports.on = function(event, fn) {
   if (typeof fn !== 'function') return;
-  if (typeof callbacks[name] === 'function') return;
   callbacks[event] = fn;
 };
 
