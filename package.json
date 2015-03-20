@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "ea": "^0.3.0",
-    "component-event": "^0.1.4"
+    "component-event": "^0.1.4",
+    "component-type": "^1.1.0"
   },
   "main": "land.js",
   "author": "Andrey Polischuk <andre.polischuk@gmail.com>",

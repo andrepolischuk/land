@@ -7,25 +7,19 @@
 
 try {
   var events = require('event');
+  var type = require('type');
 } catch (err) {
   var events = require('component-event');
+  var type = require('component-type');
 }
 
 var each = require('ea');
 
 /**
- * Object classes
+ * Data attr
  */
 
-var sectionClass = document.body.getAttribute('data-land');
-
-/**
- * Base options undefined
- */
-
-if (!sectionClass) {
-  return;
-}
+var dataAttr = 'data-land';
 
 /**
  * Current section
@@ -34,60 +28,41 @@ if (!sectionClass) {
 var current;
 
 /**
- * Effects parameters
- * x, y
- * scale
- * rotate
- * opacity
+ * Transform parameters
  */
 
-var effects = {
+var transforms = {
   x : {
-    attr : 'data-land-x',
     prop : 'transform',
     def  : 0,
     ext  : 'px',
     func : 'translateX'
   },
   y : {
-    attr : 'data-land-y',
     prop : 'transform',
     def  : 0,
     ext  : 'px',
     func : 'translateY'
   },
   scale : {
-    attr : 'data-land-scale',
     prop : 'transform',
     def  : 1,
     func : 'scale'
   },
   rotate : {
-    attr : 'data-land-rotate',
     prop : 'transform',
     def  : 0,
     ext  : 'deg',
     func : 'rotate'
   },
   opacity : {
-    attr : 'data-land-opacity',
     def  : 1,
     prop : 'opacity'
   }
 };
 
 /**
- * Effects attributes array
- */
-
-var effectsAttr = [];
-
-each(effects, function(effect) {
-  effectsAttr.push('[' + effect.attr + ']');
-});
-
-/**
- * CSS prefixes for effects parameters
+ * CSS prefixes for transform parameters
  */
 
 var prefix = {
@@ -105,12 +80,6 @@ var prefix = {
 };
 
 /**
- * Delay attribute
- */
-
-var delayAttr = 'data-land-delay';
-
-/**
  * Callbacks
  */
 
@@ -118,32 +87,172 @@ var callbacks = {};
 
 /**
  * Expose land
+ */
+
+module.exports = land;
+
+/**
+ * Attach section
+ * @param  {String|Element} element
+ * @return {Object}
  * @api public
  */
 
-module.exports = function() {
+function land(element) {
+  element = type(element) === 'element' ?
+    element :
+    document.querySelector(element);
 
+  if (!element) return;
+
+  var section = new Section(element);
+  land.sections.push(section);
+  return section;
+}
+
+/**
+ * Section
+ * @param {Element} element
+ * @api public
+ */
+
+function Section(element) {
+  this.element = element;
+  this.childrens = [];
+}
+
+/**
+ * Create section children
+ * @param  {String} selector
+ * @return {Object}
+ * @api public
+ */
+
+Section.prototype.children = function(element) {
+  element = type(element) === 'element' ?
+    element :
+    this.element.querySelector(element);
+
+  if (!element) return;
+
+  var children = new Children(element, this);
+  this.childrens.push(children);
+  return children;
 };
 
 /**
- * Expose set callbacks
+ * Section children
+ * @param {Element} element
+ * @api public
+ */
+
+function Children(element, section) {
+  this.element = element;
+  this.section = section;
+  this.transform = {};
+}
+
+/**
+ * Attach opacity
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.opacity = function(start) {
+  this.transform.opacity = parseFloat(start);
+  return this;
+};
+
+/**
+ * Attach horizontal movement
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.x = function(start) {
+  this.transform.x = parseFloat(start);
+  return this;
+};
+
+/**
+ * Attach vertical movement
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.y = function(start) {
+  this.transform.y = parseFloat(start);
+  return this;
+};
+
+/**
+ * Attach rotate
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.rotate = function(start) {
+  this.transform.rotate = parseFloat(start);
+  return this;
+};
+
+/**
+ * Attach scale
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.scale = function(start) {
+  this.transform.scale = parseFloat(start);
+  return this;
+};
+
+/**
+ * Attach delay
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.delay = function(delay) {
+  this.transform.delay = parseFloat(delay);
+  return this;
+};
+
+/**
+ * Create next children
+ * @param  {Number} start
+ * @return {Object}
+ * @api public
+ */
+
+Children.prototype.children = function(selector) {
+  return this.section.children(selector);
+};
+
+/**
+ * Set callback
  * @param {String} event
  * @param {Function} fn
  * @api public
  */
 
-module.exports.on = function(event, fn) {
-  if (typeof fn !== 'function') return;
+land.on = function(event, fn) {
+  if (type(fn) !== 'function') return;
   callbacks[event] = fn;
 };
 
 /**
- * Expose sections
+ * Sections array
  * @api public
  */
 
-var sections = module.exports.sections =
-  document.querySelectorAll(sectionClass);
+land.sections = [];
 
 /**
  * Initialize
@@ -160,40 +269,62 @@ function scroll() {
   var cur = 0;
   var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  each(sections, function(section, i) {
-    updateSection(section, progress(
-      section,
-      scrollTop,
-      function() {
-        cur = i;
-      }
-    ));
+  each(land.sections, function(section, i) {
+    updateSection(section, scrollTop);
+    cur = isCurrent(section, scrollTop) ? i : cur;
   });
 
   if (cur === current) return;
   current = cur;
 
-  if (typeof callbacks.change === 'function') {
+  if (callbacks.change) {
     callbacks.change(current);
   }
 }
 
 /**
- * Calculate section progress
- * @param  {Element} section
+ * Update section via scrollTop
+ * @param {Object} section
+ * @param {Number} scrollTop
+ * @api private
+ */
+
+function updateSection(section, scrollTop) {
+  section.progress = progress(section, scrollTop);
+
+  each(section.childrens, function(children) {
+    updateChildren(children);
+  });
+}
+
+/**
+ * Current section detection
+ * @param  {Object} section
  * @param  {Number} scrollTop
- * @param  {Function} match
  * @return {Number}
  * @api private
  */
 
-function progress(section, scrollTop, current) {
-  var height = section.offsetHeight;
-  var offsetTop = section.offsetTop;
+function isCurrent(section, scrollTop) {
+  var height = section.element.offsetHeight;
+  var offsetTop = section.element.offsetTop;
+  return scrollTop >= offsetTop && scrollTop <= offsetTop + height;
+}
+
+/**
+ * Calculate progress
+ * @param  {Object} section
+ * @param  {Number} scrollTop
+ * @return {Number}
+ * @api private
+ */
+
+function progress(section, scrollTop) {
+  var height = section.element.offsetHeight;
+  var offsetTop = section.element.offsetTop;
   var offsetBottom = offsetTop + height;
   var scrollBottom = scrollTop + height;
 
-  if (scrollTop >= offsetTop && scrollTop <= offsetBottom) current();
   if (scrollBottom <= offsetTop) return 0;
   if (scrollBottom >= offsetBottom) return 1;
 
@@ -201,73 +332,101 @@ function progress(section, scrollTop, current) {
 }
 
 /**
- * Update section
- * @param {Element} section
- * @param {Number} progress
+ * Update section children
+ * @param {Object} children
  * @api private
  */
 
-function updateSection(section, progress) {
-  var elements = section.querySelectorAll(effectsAttr.join(','));
+function updateChildren(children) {
+  var delay = children.transform.delay || 0;
+  var progress = children.section.progress;
+  var css = {};
 
-  each(elements, function(element) {
-    updateElement(element, progress);
-  });
-}
+  each(children.transform, function(start, param) {
+    if (param === 'delay') return;
 
-/**
- * Update section childrens
- * @param {Element} section
- * @param {Number} progress
- * @api private
- */
+    var transform = transforms[param];
+    var final = transform.def;
 
-function updateElement(element, progress) {
-  var delay = parseFloat(element.getAttribute(delayAttr)) || 0;
+    var value = start + ((final - start) * (progress < delay ? 0 :
+      progress - 1 + ((progress - delay) / (1 - delay))));
+    value += transform.ext || '';
+    value = param === 'opacity' ? value : transform.func + '(' + value + ')';
 
-  each(effects, function(effect, param) {
-    each(style(
-      element,
-      progress,
-      effect,
-      param,
-      delay
-    ), function(value, prop) {
-      element.style[prop] = value;
+    each(prefix[transform.prop], function(pref, prop) {
+      prop = pref + transform.prop;
+      css[prop] = css[prop] ? css[prop] + ' ' + value : value;
     });
   });
+
+  each(css, function(value, prop) {
+    children.element.style[prop] = value;
+  });
 }
 
 /**
- * Calculate children style
- * @param {Element} element
- * @param {Number} progress
- * @param {Object} effect
- * @param {String} param
- * @param {Number} delay
+ * Init landing from DOM attributes
+ */
+
+parseDom();
+
+/**
+ * Parse DOM
  * @api private
  */
 
-function style(element, progress, effect, param, delay) {
-  var start = element.getAttribute(effect.attr);
+function parseDom() {
+  var sectionClass = document.body.getAttribute(dataAttr);
+  if (!sectionClass) return;
 
-  if (!start) return;
-  start = parseFloat(start);
+  var elements = document.querySelectorAll(sectionClass);
 
-  var final = effect.def;
-  var value = start + ((final - start) * (progress < delay ? 0 :
-    progress - 1 + ((progress - delay) / (1 - delay))));
+  each(elements, function(element) {
+    parseSection(element);
+  });
+}
 
-  value += effect.ext || '';
-  value = param === 'opacity' ? value : effect.func + '(' + value + ')';
+/**
+ * Parse sections
+ * @param {Element} element
+ * @api private
+ */
 
-  var css = {};
-  var prop;
+function parseSection(element) {
+  var section = land(element);
+  var transformAttr = [];
 
-  each(prefix[effect.prop], function(pref) {
-    prop = pref + effect.prop;
-    css[prop] = css[prop] ? css[prop] + ' ' + value : value;
+  each(transforms, function(transform, param) {
+    transformAttr.push([
+      '[',
+      dataAttr,
+      '-',
+      param,
+      ']'
+    ].join(''));
   });
 
-  return css;
+  var elements = section.element.querySelectorAll(transformAttr.join(','));
+
+  each(elements, function(element) {
+    parseChildren(element, section);
+  });
+}
+
+/**
+ * Parse section childrens
+ * @param {Element} element
+ * @param {Object} section
+ * @api private
+ */
+
+function parseChildren(element, section) {
+  var children = section.children(element);
+  var attr;
+
+  each(transforms, function(transform, param) {
+    attr = element.getAttribute(dataAttr + '-' + param);
+    if (!attr) return;
+    children[param](attr);
+  });
 }
