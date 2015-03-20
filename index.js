@@ -6,10 +6,8 @@
  */
 
 try {
-  var events = require('event');
   var type = require('type');
 } catch (err) {
-  var events = require('component-event');
   var type = require('component-type');
 }
 
@@ -258,7 +256,8 @@ land.sections = [];
  * Initialize
  */
 
-events.bind(window, 'scroll', scroll, false)();
+window.addEventListener('scroll', scroll, false);
+scroll();
 
 /**
  * Scroll handler
