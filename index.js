@@ -65,15 +65,15 @@ var transforms = {
 
 var prefix = {
   transform : [
-    '-webkit-',
-    '-moz-',
-    '-ms-',
-    '-o-',
-    ''
+    'webkitTransform',
+    'MozTransform',
+    'msTransform',
+    'oTransform',
+    'transform'
   ],
   opacity : [
-    '-moz-',
-    ''
+    'MozOpacity',
+    'opacity'
   ]
 };
 
@@ -352,9 +352,8 @@ function updateChildren(children) {
     value += transform.ext || '';
     value = param === 'opacity' ? value : transform.func + '(' + value + ')';
 
-    each(prefix[transform.prop], function(pref, prop) {
-      prop = pref + transform.prop;
-      css[prop] = css[prop] ? css[prop] + ' ' + value : value;
+    each(prefix[transform.prop], function(pref) {
+      css[pref] = css[pref] ? css[pref] + ' ' + value : value;
     });
   });
 
