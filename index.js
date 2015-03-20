@@ -14,12 +14,6 @@ try {
 var each = require('ea');
 
 /**
- * Data attr
- */
-
-var dataAttr = 'data-land';
-
-/**
  * Current section
  */
 
@@ -87,26 +81,7 @@ var callbacks = {};
  * Expose land
  */
 
-module.exports = land;
-
-/**
- * Attach section
- * @param  {String|Element} element
- * @return {Object}
- * @api public
- */
-
-function land(element) {
-  element = type(element) === 'element' ?
-    element :
-    document.querySelector(element);
-
-  if (!element) return;
-
-  var section = new Section(element);
-  land.sections.push(section);
-  return section;
-}
+module.exports = Section;
 
 /**
  * Section
@@ -115,8 +90,16 @@ function land(element) {
  */
 
 function Section(element) {
+  if (!(this instanceof Section)) return new Section(element);
+  if (type(element) === 'string') element = document.querySelector(element);
+  if (!element) return;
+
   this.element = element;
   this.childrens = [];
+  this._progress = 0;
+  this._current = false;
+
+  Section.sections.push(this);
 }
 
 /**
@@ -127,15 +110,29 @@ function Section(element) {
  */
 
 Section.prototype.children = function(element) {
-  element = type(element) === 'element' ?
-    element :
-    this.element.querySelector(element);
+  return new Children(element, this);
+};
 
-  if (!element) return;
+/**
+ * Update section
+ * @api private
+ */
 
-  var children = new Children(element, this);
-  this.childrens.push(children);
-  return children;
+Section.prototype.update = function() {
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  var height = this.element.offsetHeight;
+  var offsetTop = this.element.offsetTop;
+
+  this._current = scrollTop >= offsetTop &&
+    scrollTop <= offsetTop + height;
+
+  this._progress = scrollTop + height <= offsetTop ? 0 :
+    (scrollTop >= offsetTop ? 1 :
+    (scrollTop + height - offsetTop) / height);
+
+  each(this.childrens, function(children) {
+    children.update();
+  });
 };
 
 /**
@@ -145,9 +142,16 @@ Section.prototype.children = function(element) {
  */
 
 function Children(element, section) {
+  if (type(element) === 'string') element = this.element.querySelector(element);
+  if (!element) return;
+
   this.element = element;
   this.section = section;
-  this.transform = {};
+
+  this._transform = {};
+  this._delay = 0;
+
+  section.childrens.push(this);
 }
 
 /**
@@ -158,7 +162,7 @@ function Children(element, section) {
  */
 
 Children.prototype.opacity = function(start) {
-  this.transform.opacity = parseFloat(start);
+  this._transform.opacity = parseFloat(start);
   return this;
 };
 
@@ -170,7 +174,7 @@ Children.prototype.opacity = function(start) {
  */
 
 Children.prototype.x = function(start) {
-  this.transform.x = parseFloat(start);
+  this._transform.x = parseFloat(start);
   return this;
 };
 
@@ -182,7 +186,7 @@ Children.prototype.x = function(start) {
  */
 
 Children.prototype.y = function(start) {
-  this.transform.y = parseFloat(start);
+  this._transform.y = parseFloat(start);
   return this;
 };
 
@@ -194,7 +198,7 @@ Children.prototype.y = function(start) {
  */
 
 Children.prototype.rotate = function(start) {
-  this.transform.rotate = parseFloat(start);
+  this._transform.rotate = parseFloat(start);
   return this;
 };
 
@@ -206,7 +210,7 @@ Children.prototype.rotate = function(start) {
  */
 
 Children.prototype.scale = function(start) {
-  this.transform.scale = parseFloat(start);
+  this._transform.scale = parseFloat(start);
   return this;
 };
 
@@ -218,7 +222,7 @@ Children.prototype.scale = function(start) {
  */
 
 Children.prototype.delay = function(delay) {
-  this.transform.delay = parseFloat(delay);
+  this._delay = parseFloat(delay) || 0;
   return this;
 };
 
@@ -234,13 +238,45 @@ Children.prototype.children = function(selector) {
 };
 
 /**
+ * Update section children
+ * @param {Object} children
+ * @api private
+ */
+
+Children.prototype.update = function() {
+  var delay = this._delay;
+  var progress = this.section._progress;
+  var element = this.element;
+  var css = {};
+
+  each(this._transform, function(start, param) {
+    var transform = transforms[param];
+    var final = transform.def;
+
+    var value = start + ((final - start) * (progress < delay ? 0 :
+      progress - 1 + ((progress - delay) / (1 - delay))));
+
+    value += transform.ext || '';
+    value = param === 'opacity' ? value : transform.func + '(' + value + ')';
+
+    each(prefix[transform.prop], function(pref) {
+      css[pref] = css[pref] ? css[pref] + ' ' + value : value;
+    });
+  });
+
+  each(css, function(value, prop) {
+    element.style[prop] = value;
+  });
+};
+
+/**
  * Set callback
  * @param {String} event
  * @param {Function} fn
  * @api public
  */
 
-land.on = function(event, fn) {
+Section.on = function(event, fn) {
   if (type(fn) !== 'function') return;
   callbacks[event] = fn;
 };
@@ -250,7 +286,7 @@ land.on = function(event, fn) {
  * @api public
  */
 
-land.sections = [];
+Section.sections = [];
 
 /**
  * Initialize
@@ -266,11 +302,10 @@ scroll();
 
 function scroll() {
   var cur = 0;
-  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  each(land.sections, function(section, i) {
-    updateSection(section, scrollTop);
-    cur = isCurrent(section, scrollTop) ? i : cur;
+  each(Section.sections, function(section, i) {
+    section.update();
+    cur = section._current ? i : cur;
   });
 
   if (cur === current) return;
@@ -282,85 +317,10 @@ function scroll() {
 }
 
 /**
- * Update section via scrollTop
- * @param {Object} section
- * @param {Number} scrollTop
- * @api private
+ * Data attr
  */
 
-function updateSection(section, scrollTop) {
-  section.progress = progress(section, scrollTop);
-
-  each(section.childrens, function(children) {
-    updateChildren(children);
-  });
-}
-
-/**
- * Current section detection
- * @param  {Object} section
- * @param  {Number} scrollTop
- * @return {Number}
- * @api private
- */
-
-function isCurrent(section, scrollTop) {
-  var height = section.element.offsetHeight;
-  var offsetTop = section.element.offsetTop;
-  return scrollTop >= offsetTop && scrollTop <= offsetTop + height;
-}
-
-/**
- * Calculate progress
- * @param  {Object} section
- * @param  {Number} scrollTop
- * @return {Number}
- * @api private
- */
-
-function progress(section, scrollTop) {
-  var height = section.element.offsetHeight;
-  var offsetTop = section.element.offsetTop;
-  var offsetBottom = offsetTop + height;
-  var scrollBottom = scrollTop + height;
-
-  if (scrollBottom <= offsetTop) return 0;
-  if (scrollBottom >= offsetBottom) return 1;
-
-  return (scrollBottom - offsetTop) / height;
-}
-
-/**
- * Update section children
- * @param {Object} children
- * @api private
- */
-
-function updateChildren(children) {
-  var delay = children.transform.delay || 0;
-  var progress = children.section.progress;
-  var css = {};
-
-  each(children.transform, function(start, param) {
-    if (param === 'delay') return;
-
-    var transform = transforms[param];
-    var final = transform.def;
-
-    var value = start + ((final - start) * (progress < delay ? 0 :
-      progress - 1 + ((progress - delay) / (1 - delay))));
-    value += transform.ext || '';
-    value = param === 'opacity' ? value : transform.func + '(' + value + ')';
-
-    each(prefix[transform.prop], function(pref) {
-      css[pref] = css[pref] ? css[pref] + ' ' + value : value;
-    });
-  });
-
-  each(css, function(value, prop) {
-    children.element.style[prop] = value;
-  });
-}
+var dataAttr = 'data-land';
 
 /**
  * Init landing from DOM attributes
@@ -391,7 +351,7 @@ function parseDom() {
  */
 
 function parseSection(element) {
-  var section = land(element);
+  var section = Section(element);
   var transformAttr = [];
 
   each(transforms, function(transform, param) {
