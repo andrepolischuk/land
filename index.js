@@ -20,6 +20,12 @@ var each = require('ea');
 var current;
 
 /**
+ * Current scrollTop
+ */
+
+var scrollTop;
+
+/**
  * Transform parameters
  */
 
@@ -85,32 +91,32 @@ module.exports = Section;
 
 /**
  * Section
- * @param {Element} element
+ * @param {String|Element} el
  * @api public
  */
 
-function Section(element) {
-  if (!(this instanceof Section)) return new Section(element);
-  if (type(element) === 'string') element = document.querySelector(element);
-  if (!element) return;
+function Section(el) {
+  if (!(this instanceof Section)) return new Section(el);
+  if (type(el) === 'string') el = document.querySelector(el);
+  if (!el) return;
 
-  this.element = element;
+  this.element = el;
   this.childrens = [];
+  this.current = false;
   this._progress = 0;
-  this._current = false;
 
   Section.sections.push(this);
 }
 
 /**
  * Create section children
- * @param  {String} selector
+ * @param  {String|Element} el
  * @return {Object}
  * @api public
  */
 
-Section.prototype.children = function(element) {
-  return new Children(element, this);
+Section.prototype.children = function(el) {
+  return new Children(el, this);
 };
 
 /**
@@ -119,11 +125,10 @@ Section.prototype.children = function(element) {
  */
 
 Section.prototype.update = function() {
-  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   var height = this.element.offsetHeight;
   var offsetTop = this.element.offsetTop;
 
-  this._current = scrollTop >= offsetTop &&
+  this.current = scrollTop >= offsetTop &&
     scrollTop <= offsetTop + height;
 
   this._progress = scrollTop + height <= offsetTop ? 0 :
@@ -137,15 +142,15 @@ Section.prototype.update = function() {
 
 /**
  * Section children
- * @param {Element} element
+ * @param {String|Element} el
  * @api public
  */
 
-function Children(element, section) {
-  if (type(element) === 'string') element = this.element.querySelector(element);
-  if (!element) return;
+function Children(el, section) {
+  if (type(el) === 'string') el = section.element.querySelector(el);
+  if (!el) return;
 
-  this.element = element;
+  this.element = el;
   this.section = section;
 
   this._transform = {};
@@ -155,68 +160,35 @@ function Children(element, section) {
 }
 
 /**
- * Attach opacity
- * @param  {Number} start
- * @return {Object}
+ * Attach transform prop
+ * @param {String} prop
+ * @param {Number|Function} val
  * @api public
  */
 
-Children.prototype.opacity = function(start) {
-  this._transform.opacity = parseFloat(start);
+Children.prototype.set = function(prop, val) {
+  this._transform[prop] = type(val) === 'function' ?
+    val : parseFloat(val);
   return this;
 };
 
 /**
- * Attach horizontal movement
- * @param  {Number} start
+ * Attach props
+ * @param  {Number|Function} val
  * @return {Object}
  * @api public
  */
 
-Children.prototype.x = function(start) {
-  this._transform.x = parseFloat(start);
-  return this;
-};
-
-/**
- * Attach vertical movement
- * @param  {Number} start
- * @return {Object}
- * @api public
- */
-
-Children.prototype.y = function(start) {
-  this._transform.y = parseFloat(start);
-  return this;
-};
-
-/**
- * Attach rotate
- * @param  {Number} start
- * @return {Object}
- * @api public
- */
-
-Children.prototype.rotate = function(start) {
-  this._transform.rotate = parseFloat(start);
-  return this;
-};
-
-/**
- * Attach scale
- * @param  {Number} start
- * @return {Object}
- * @api public
- */
-
-Children.prototype.scale = function(start) {
-  this._transform.scale = parseFloat(start);
-  return this;
-};
+each(transforms, function(transform, prop) {
+  Children.prototype[prop] = function(val) {
+    this.set(prop, val);
+    return this;
+  };
+});
 
 /**
  * Attach delay
- * @param  {Number} start
+ * @param  {Number} delay
  * @return {Object}
  * @api public
  */
@@ -228,18 +200,17 @@ Children.prototype.delay = function(delay) {
 
 /**
  * Create next children
- * @param  {Number} start
+ * @param  {String|Element} el
  * @return {Object}
  * @api public
  */
 
-Children.prototype.children = function(selector) {
-  return this.section.children(selector);
+Children.prototype.children = function(el) {
+  return this.section.children(el);
 };
 
 /**
  * Update section children
- * @param {Object} children
  * @api private
  */
 
@@ -249,12 +220,14 @@ Children.prototype.update = function() {
   var element = this.element;
   var css = {};
 
-  each(this._transform, function(start, param) {
+  each(this._transform, function(val, param) {
     var transform = transforms[param];
     var final = transform.def;
 
-    var value = start + ((final - start) * (progress < delay ? 0 :
-      progress - 1 + ((progress - delay) / (1 - delay))));
+    var value = type(val) === 'function' ?
+      val(progress, final) :
+      val + ((final - val) * (progress < delay ? 0 :
+        progress - 1 + ((progress - delay) / (1 - delay))));
 
     value += transform.ext || '';
     value = param === 'opacity' ? value : transform.func + '(' + value + ')';
@@ -302,10 +275,11 @@ scroll();
 
 function scroll() {
   var cur = 0;
+  scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
   each(Section.sections, function(section, i) {
     section.update();
-    cur = section._current ? i : cur;
+    cur = section.current ? i : cur;
   });
 
   if (cur === current) return;
