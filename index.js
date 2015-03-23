@@ -121,7 +121,7 @@ Section.prototype.children = function(el) {
 
 /**
  * Update section
- * @api private
+ * @api public
  */
 
 Section.prototype.update = function() {
@@ -160,7 +160,7 @@ function Children(el, section) {
 }
 
 /**
- * Attach transform prop
+ * Attach transform props
  * @param {String} prop
  * @param {Number|Function} val
  * @api public
@@ -173,7 +173,7 @@ Children.prototype.set = function(prop, val) {
 };
 
 /**
- * Attach props
+ * Attach transform prop
  * @param  {Number|Function} val
  * @return {Object}
  * @api public
@@ -211,7 +211,7 @@ Children.prototype.children = function(el) {
 
 /**
  * Update section children
- * @api private
+ * @api public
  */
 
 Children.prototype.update = function() {

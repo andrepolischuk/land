@@ -22,21 +22,145 @@ $ component install andrepolischuk/land
 $ npm install land
 ```
 
-## Use
+## Example
 
-  Set landing sections classes via `data-land` attribute:
+```js
+land('.section')
+  .children('h2')
+    .y(-50)
+    .opacity(0)
+    .scale(0.5)
+  .children('img')
+    .x(50)
+    .scale(0.5)
+    .rotate(10);
+```
+
+## API
+
+### land(element)
+
+  Return [section](#section)
+
+```js
+land('.section-first')
+land(document.querySelector('.section-first'))
+```
+
+### land.sections
+
+  Return sections array
+
+### land.on(event, fn)
+
+  Set events handler
+
+```js
+land.on('change', function(cur) {
+
+})
+```
+
+### Section
+
+#### Section#element
+
+  Section DOM element
+
+#### Section#childrens
+
+  Array of sections childrens
+
+#### Section#current
+
+  If `true`, this section is current
+
+#### Section#children(element)
+
+  Return section [children](#children)
+
+```js
+land('.section-first')
+  .children('h2')
+```
+
+### Children
+
+#### Children#element
+
+  Children DOM element
+
+#### Children#section
+
+  Parent section
+
+#### Children#set(prop, val)
+
+  Set transform start value
+
+```js
+land('.section-first')
+  .children('h2')
+    .scale(0.5);
+```
+
+  or transform function
+
+```js
+land('.section-first')
+  .children('h2')
+    .opacity(function(progress) {
+      return 1 - progress;
+    });
+```
+
+#### Children#opacity(val)
+
+  Set opacity (0..1)
+
+#### Children#x(val)
+
+  Set horizontal movement
+
+#### Children#y(val)
+
+  Set vertical movement
+
+#### Children#scale(val)
+
+  Set rescaling (0..2)
+
+#### Children#rotate(val)
+
+  Set rotation (0..360)
+
+#### Children#delay(val)
+
+  Set transform delay (0..1)
+
+#### Children#children(element)
+
+  Return parent section children
+
+## Data attributes
+
+  Define landing via `data-*` attributes
+
+### Sections
+
+  Sections defining via `data-land`:
 
 ```html
 <body data-land=".land-section">
 ```
 
-## Options
+## Transforms
 
-Options defining through setting element attributes with start value.
+  Transforms defining via setting element attributes with start value
 
 ### data-land-opacity
 
-  Opacity (0..1)
+  Opacity
 
 ```html
 <h2 data-land-opacity="0">...</h2>
@@ -68,7 +192,7 @@ Options defining through setting element attributes with start value.
 
 ### data-land-scale
 
-  Rescaling (0..2)
+  Rescaling
 
 ```html
 <h2 data-land-scale="0.5">...</h2>
@@ -83,22 +207,6 @@ Options defining through setting element attributes with start value.
 <h2 data-land-opacity="0" data-land-delay="0.5">...</h2>
 ```
 
-## API
-
-### land.sections
-
-  Landing section elements array
-
-### land.on(event, callback)
-
-  Set function called by change current section
-
-```js
-land.on('change', function(cur) {
-  console.log(cur);
-});
-```
-
 ## Support
 
 * Chrome
@@ -106,3 +214,7 @@ land.on('change', function(cur) {
 * Firefox
 * Opera
 * Internet Explorer 9+
+
+## License
+
+  MIT
