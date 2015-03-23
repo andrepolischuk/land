@@ -1,3 +1,13 @@
+# 1.2.0 / 2015.03.23
+
+  * Add API #6
+  * Add transform functions #7
+  * Add test
+  * Fix vendor prefix
+  * Fix event handlers rewrite
+  * Extract components
+  * Remove attachEvent
+
 # 1.1.0 / 2015.01.07
 
   * Module rename form Landing to Land

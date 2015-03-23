@@ -7,7 +7,7 @@
   Browser:
 
 ```html
-<script src="https://cdn.rawgit.com/andrepolischuk/land/1.1.0/land.min.js"></script>
+<script src="https://cdn.rawgit.com/andrepolischuk/land/1.2.0/land.min.js"></script>
 ```
 
   Component(1):
@@ -101,7 +101,7 @@ land('.section-first')
 ```js
 land('.section-first')
   .children('h2')
-    .scale(0.5);
+    .set('scale', 0.5);
 ```
 
   or transform function
@@ -109,7 +109,7 @@ land('.section-first')
 ```js
 land('.section-first')
   .children('h2')
-    .opacity(function(progress) {
+    .set('opacity', function(progress) {
       return 1 - progress;
     });
 ```
@@ -118,25 +118,59 @@ land('.section-first')
 
   Set opacity (0..1)
 
+```js
+land('.section-first')
+  .children('h2')
+    .opacity(0.5);
+```
+
 #### Children#x(val)
 
   Set horizontal movement
+
+```js
+land('.section-first')
+  .children('h2').x(-250);
+```
 
 #### Children#y(val)
 
   Set vertical movement
 
+```js
+land('.section-first')
+  .children('h2').y(-100);
+```
+
 #### Children#scale(val)
 
   Set rescaling (0..2)
+
+```js
+land('.section-first')
+  .children('h2')
+    .scale(0.75);
+```
 
 #### Children#rotate(val)
 
   Set rotation (0..360)
 
+```js
+land('.section-first')
+  .children('h2')
+    .rotate(45);
+```
+
 #### Children#delay(val)
 
   Set transform delay (0..1)
+
+```js
+land('.section-first')
+  .children('h2')
+    .delay(0.25);
+```
 
 #### Children#children(element)
 
@@ -154,11 +188,11 @@ land('.section-first')
 <body data-land=".land-section">
 ```
 
-## Transforms
+### Transforms
 
   Transforms defining via setting element attributes with start value
 
-### data-land-opacity
+#### data-land-opacity
 
   Opacity
 
@@ -166,7 +200,7 @@ land('.section-first')
 <h2 data-land-opacity="0">...</h2>
 ```
 
-### data-land-x
+#### data-land-x
 
   Horizontal movement
 
@@ -174,7 +208,7 @@ land('.section-first')
 <h2 data-land-x="-350px">...</h2>
 ```
 
-### data-land-y
+#### data-land-y
 
   Vertical movement
 
@@ -182,7 +216,7 @@ land('.section-first')
 <h2 data-land-y="-200px">...</h2>
 ```
 
-### data-land-rotation
+#### data-land-rotation
 
   Rotation
 
@@ -190,7 +224,7 @@ land('.section-first')
 <h2 data-land-rotation="60deg">...</h2>
 ```
 
-### data-land-scale
+#### data-land-scale
 
   Rescaling
 
@@ -198,7 +232,7 @@ land('.section-first')
 <h2 data-land-scale="0.5">...</h2>
 ```
 
-### data-land-delay
+#### data-land-delay
 
   Delay of action (0..1)
 
