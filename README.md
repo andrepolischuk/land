@@ -176,78 +176,13 @@ land('.section-first')
 
   Return parent section children
 
-## Data attributes
-
-  Define landing via `data-*` attributes
-
-### Sections
-
-  Sections defining via `data-land`:
-
-```html
-<body data-land=".land-section">
-```
-
-### Transforms
-
-  Transforms defining via setting element attributes with start value
-
-#### data-land-opacity
-
-  Opacity
-
-```html
-<h2 data-land-opacity="0">...</h2>
-```
-
-#### data-land-x
-
-  Horizontal movement
-
-```html
-<h2 data-land-x="-350px">...</h2>
-```
-
-#### data-land-y
-
-  Vertical movement
-
-```html
-<h2 data-land-y="-200px">...</h2>
-```
-
-#### data-land-rotation
-
-  Rotation
-
-```html
-<h2 data-land-rotation="60deg">...</h2>
-```
-
-#### data-land-scale
-
-  Rescaling
-
-```html
-<h2 data-land-scale="0.5">...</h2>
-```
-
-#### data-land-delay
-
-  Delay of action (0..1)
-
-```html
-<h2 data-land-opacity="0">...</h2>
-<h2 data-land-opacity="0" data-land-delay="0.5">...</h2>
-```
-
 ## Support
 
 * Chrome
 * Safari
 * Firefox
 * Opera
-* Internet Explorer 9+
+* IE 9+
 
 ## License
 
