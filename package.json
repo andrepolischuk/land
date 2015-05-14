@@ -6,21 +6,15 @@
     "landing",
     "effects"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/andrepolischuk/land.git"
-  },
+  "repository": "andrepolischuk/land",
   "dependencies": {
     "ea": "^0.4.0",
     "component-type": "^1.1.0"
   },
-  "devDependencies": {
-    "mocha": "^2.2.1"
-  },
   "browser": {
     "type": "component-type"
   },
-  "main": "land.js",
+  "main": "index.js",
   "author": "Andrey Polischuk <andre.polischuk@gmail.com>",
   "license": "MIT"
 }

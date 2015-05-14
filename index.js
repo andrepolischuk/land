@@ -91,6 +91,7 @@ module.exports = Section;
 
 /**
  * Section
+ *
  * @param {String|Element} el
  * @api public
  */
@@ -110,6 +111,7 @@ function Section(el) {
 
 /**
  * Create section children
+ *
  * @param  {String|Element} el
  * @return {Object}
  * @api public
@@ -121,6 +123,7 @@ Section.prototype.children = function(el) {
 
 /**
  * Update section
+ *
  * @api public
  */
 
@@ -142,6 +145,7 @@ Section.prototype.update = function() {
 
 /**
  * Section children
+ *
  * @param {String|Element} el
  * @api public
  */
@@ -161,6 +165,7 @@ function Children(el, section) {
 
 /**
  * Attach transform props
+ *
  * @param {String} prop
  * @param {Number|Function} val
  * @api public
@@ -174,6 +179,7 @@ Children.prototype.set = function(prop, val) {
 
 /**
  * Attach transform prop
+ *
  * @param  {Number|Function} val
  * @return {Object}
  * @api public
@@ -188,6 +194,7 @@ each(transforms, function(transform, prop) {
 
 /**
  * Attach delay
+ *
  * @param  {Number} delay
  * @return {Object}
  * @api public
@@ -200,6 +207,7 @@ Children.prototype.delay = function(delay) {
 
 /**
  * Create next children
+ *
  * @param  {String|Element} el
  * @return {Object}
  * @api public
@@ -211,6 +219,7 @@ Children.prototype.children = function(el) {
 
 /**
  * Update section children
+ *
  * @api public
  */
 
@@ -244,6 +253,7 @@ Children.prototype.update = function() {
 
 /**
  * Set callback
+ *
  * @param {String} event
  * @param {Function} fn
  * @api public
@@ -256,6 +266,7 @@ Section.on = function(event, fn) {
 
 /**
  * Sections array
+ *
  * @api public
  */
 
@@ -270,6 +281,7 @@ scroll();
 
 /**
  * Scroll handler
+ *
  * @api private
  */
 
@@ -304,6 +316,7 @@ parseDom();
 
 /**
  * Parse DOM
+ *
  * @api private
  */
 
@@ -320,6 +333,7 @@ function parseDom() {
 
 /**
  * Parse sections
+ *
  * @param {Element} element
  * @api private
  */
@@ -347,6 +361,7 @@ function parseSection(element) {
 
 /**
  * Parse section childrens
+ *
  * @param {Element} element
  * @param {Object} section
  * @api private

@@ -1,30 +1,19 @@
-# Land
+# land
 
-  Landing page effects
+  > Landing page effects
 
 ## Instalation
 
-  Browser:
-
-```html
-<script src="https://cdn.rawgit.com/andrepolischuk/land/1.2.0/land.min.js"></script>
-```
-
-  Component(1):
-
 ```sh
+$ npm install --save land
 $ component install andrepolischuk/land
 ```
 
-  Npm:
-
-```sh
-$ npm install land
-```
-
-## Example
+## Usage
 
 ```js
+var land = require('land');
+
 land('.section')
   .children('h2')
     .y(-50)
@@ -43,8 +32,8 @@ land('.section')
   Return [section](#section)
 
 ```js
-land('.section-first')
-land(document.querySelector('.section-first'))
+land('.section-first');
+land(document.querySelector('.section-first'));
 ```
 
 ### land.sections
@@ -58,7 +47,7 @@ land(document.querySelector('.section-first'))
 ```js
 land.on('change', function(cur) {
 
-})
+});
 ```
 
 ### Section
