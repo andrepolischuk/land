@@ -30,32 +30,32 @@ var scrollTop;
  */
 
 var transforms = {
-  x : {
-    prop : 'transform',
-    def  : 0,
-    ext  : 'px',
-    func : 'translateX'
+  x: {
+    prop: 'transform',
+    def: 0,
+    ext: 'px',
+    func: 'translateX'
   },
-  y : {
-    prop : 'transform',
-    def  : 0,
-    ext  : 'px',
-    func : 'translateY'
+  y: {
+    prop: 'transform',
+    def: 0,
+    ext: 'px',
+    func: 'translateY'
   },
-  scale : {
-    prop : 'transform',
-    def  : 1,
-    func : 'scale'
+  scale: {
+    prop: 'transform',
+    def: 1,
+    func: 'scale'
   },
-  rotate : {
-    prop : 'transform',
-    def  : 0,
-    ext  : 'deg',
-    func : 'rotate'
+  rotate: {
+    prop: 'transform',
+    def: 0,
+    ext: 'deg',
+    func: 'rotate'
   },
-  opacity : {
-    def  : 1,
-    prop : 'opacity'
+  opacity: {
+    def: 1,
+    prop: 'opacity'
   }
 };
 
@@ -64,14 +64,14 @@ var transforms = {
  */
 
 var prefix = {
-  transform : [
+  transform: [
     'webkitTransform',
     'MozTransform',
     'msTransform',
     'oTransform',
     'transform'
   ],
-  opacity : [
+  opacity: [
     'MozOpacity',
     'opacity'
   ]
