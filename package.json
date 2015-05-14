@@ -17,6 +17,9 @@
   "devDependencies": {
     "mocha": "^2.2.1"
   },
+  "browser": {
+    "type": "component-type"
+  },
   "main": "land.js",
   "author": "Andrey Polischuk <andre.polischuk@gmail.com>",
   "license": "MIT"
