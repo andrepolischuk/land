@@ -6,6 +6,9 @@
 
 ```sh
 $ npm install --save land
+```
+
+```sh
 $ component install andrepolischuk/land
 ```
 
@@ -29,61 +32,23 @@ land('.section')
 
 ### land(element)
 
-  Return [section](#section)
+  Create section
 
 ```js
 land('.section-first');
 land(document.querySelector('.section-first'));
 ```
 
-### land.sections
+### .children(element)
 
-  Return sections array
-
-### land.on(event, fn)
-
-  Set events handler
-
-```js
-land.on('change', function(cur) {
-
-});
-```
-
-### Section
-
-#### Section#element
-
-  Section DOM element
-
-#### Section#childrens
-
-  Array of sections childrens
-
-#### Section#current
-
-  If `true`, this section is current
-
-#### Section#children(element)
-
-  Return section [children](#children)
+  Create section children
 
 ```js
 land('.section-first')
   .children('h2')
 ```
 
-### Children
-
-#### Children#element
-
-  Children DOM element
-
-#### Children#section
-
-  Parent section
-
-#### Children#set(prop, val)
+### .set(prop, val)
 
   Set transform start value
 
@@ -103,7 +68,7 @@ land('.section-first')
     });
 ```
 
-#### Children#opacity(val)
+### .opacity(val)
 
   Set opacity (0..1)
 
@@ -113,7 +78,7 @@ land('.section-first')
     .opacity(0.5);
 ```
 
-#### Children#x(val)
+### .x(val)
 
   Set horizontal movement
 
@@ -122,7 +87,7 @@ land('.section-first')
   .children('h2').x(-250);
 ```
 
-#### Children#y(val)
+### .y(val)
 
   Set vertical movement
 
@@ -131,7 +96,7 @@ land('.section-first')
   .children('h2').y(-100);
 ```
 
-#### Children#scale(val)
+### .scale(val)
 
   Set rescaling (0..2)
 
@@ -141,7 +106,7 @@ land('.section-first')
     .scale(0.75);
 ```
 
-#### Children#rotate(val)
+### .rotate(val)
 
   Set rotation (0..360)
 
@@ -151,7 +116,7 @@ land('.section-first')
     .rotate(45);
 ```
 
-#### Children#delay(val)
+### .delay(val)
 
   Set transform delay (0..1)
 
@@ -161,9 +126,15 @@ land('.section-first')
     .delay(0.25);
 ```
 
-#### Children#children(element)
+### land.on(event, fn)
 
-  Return parent section children
+  Set events handler
+
+```js
+land.on('change', function(cur) {
+
+});
+```
 
 ## Support
 
