@@ -2,14 +2,14 @@
 
   > Landing page effects
 
-## Instalation
+## Install
 
 ```sh
-$ npm install --save land
+npm install --save land
 ```
 
 ```sh
-$ component install andrepolischuk/land
+component install andrepolischuk/land
 ```
 
 ## Usage
