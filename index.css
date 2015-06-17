@@ -1,53 +1,12 @@
 
-@import url(http://fonts.googleapis.com/css?family=PT+Sans);
-@import 'twbs/bootstrap:dist/css/bootstrap.css';
+@import "bootstrap-gh-pages";
 
-html, body {
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  font-family: 'PT Sans', sans-serif;
-  background-color: #fff;
-}
-
-h1, h2 {
-  font-weight: bold;
-}
-
-h1 {
-  font-size: 75px;
-}
-
-h2 {
-  font-size: 50px;
-}
-
-.land-section {
-  display: table;
-  min-height: 100%;
-  /*height: auto!important;*/
-  height: 100%;
+.section {
+  padding: 150px 25%;
   overflow: hidden;
-  width: 100%;
-}
-
-.land-section:nth-child(odd) {
-  background-color: #eee;
-}
-
-.land-section > a {
-  position: absolute;
-}
-
-.land-section h4 .glyphicon {
-  font-size: 125px;
-}
-
-.land-section .content {
-  display: table-cell;
   text-align: center;
-  vertical-align: middle;
-  width: 70%;
+}
+
+.section:nth-child(odd) {
+  background-color: #f9f9f9;
 }
