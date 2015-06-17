@@ -129,14 +129,15 @@ Section.prototype.children = function(el) {
 
 Section.prototype.update = function() {
   var height = this.element.offsetHeight;
+  var scrollBottom = scrollTop + window.innerHeight;
   var offsetTop = this.element.offsetTop;
 
-  this.current = scrollTop >= offsetTop &&
-    scrollTop <= offsetTop + height;
+  this.current = scrollBottom >= offsetTop &&
+  scrollBottom <= offsetTop + height;
 
-  this._progress = scrollTop + height <= offsetTop ? 0 :
-    (scrollTop >= offsetTop ? 1 :
-    (scrollTop + height - offsetTop) / height);
+  this._progress = scrollBottom <= offsetTop ? 0 :
+    (scrollBottom >= offsetTop + height ? 1 :
+    (scrollBottom - offsetTop) / height);
 
   each(this.childrens, function(children) {
     children.update();
