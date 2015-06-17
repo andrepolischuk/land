@@ -174,6 +174,7 @@ function Children(el, section) {
 Children.prototype.set = function(prop, val) {
   this._transform[prop] = type(val) === 'function' ?
     val : parseFloat(val);
+  this.update();
   return this;
 };
 
