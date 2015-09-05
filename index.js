@@ -1,4 +1,3 @@
-
 import land from 'land';
 
 land('.section-opacity')
