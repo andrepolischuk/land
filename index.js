@@ -134,9 +134,6 @@ Children.prototype.update = function() {
       val(progress, final) :
       val + ((final - val) * (progress <= delay ? 0 :
         progress - 1 + ((progress - delay) / (1 - delay))));
-    if (isNaN(value)) {
-      console.log(value);
-    }
 
     value += transform.ext || '';
     value = param === 'opacity' ? value : transform.func + '(' + value + ')';
