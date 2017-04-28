@@ -8,10 +8,6 @@
 npm install --save land
 ```
 
-```sh
-component install andrepolischuk/land
-```
-
 ## Usage
 
 ```js
